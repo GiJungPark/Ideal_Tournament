@@ -1,0 +1,46 @@
+<!-- upload.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이상형 월드컵 - 업로드</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+    <h1>이상형 월드컵</h1>
+    <h2>이상형 업로드</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="name">이상형 이름:</label>
+        <input type="text" name="name" required>
+        <label for="file">이상형 사진 업로드:</label>
+        <input type="file" name="file" accept=".jpg, .jpeg, .png, .gif" required>
+        <button type="submit">업로드</button>
+    </form>
+    <h2>현재 등록된 이상형</h2>
+    <ul>
+        {% for ideal in ideal_types %}
+            <li>{{ ideal['name'] }}</li>
+        {% endfor %}
+    </ul>
+    <p><a href="/game">이상형 월드컵 시작</a></p>
+
+    <h2>실시간 이미지 업데이트</h2>
+    <ul id="imageList"></ul>
+
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('update_images', function(data) {
+            var imageList = document.getElementById('imageList');
+            imageList.innerHTML = '';
+            data.images.forEach(function(name) {
+                var listItem = document.createElement('li');
+                listItem.textContent = name;
+                imageList.appendChild(listItem);
+            });
+        });
+    </script>
+</body>
+</html>
+

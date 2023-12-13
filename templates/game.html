@@ -1,0 +1,31 @@
+<!-- game.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이상형 월드컵 - 게임</title>
+</head>
+<body>
+    <h1>이상형 월드컵</h1>
+    
+    {% if matches %}
+        <form method="post">
+            <p>{{ matches[0]['name'] }} vs {{ matches[1]['name'] }}</p>
+            <label>
+                <input type="radio" name="chosen_ideal" value="{{ matches[0]['name'] }}" required> {{ matches[0]['name'] }}
+                <img src="{{ url_for('static', filename='uploads/' + matches[0]['image']) }}" alt="{{ matches[0]['name'] }}" style="max-width: 500px; max-height: 500px;">
+            </label>
+            <label>
+                <input type="radio" name="chosen_ideal" value="{{ matches[1]['name'] }}" required> {{ matches[1]['name'] }}
+                <img src="{{ url_for('static', filename='uploads/' + matches[1]['image']) }}" alt="{{ matches[1]['name'] }}" style="max-width: 500px; max-height: 500px;">
+            </label>
+            <button type="submit">선택</button>
+        </form>
+    {% else %}
+        <p>게임 종료 - 최종 이상형: {{ chosen_ideals[0] }}</p>
+        <img src="{{ url_for('static', filename='uploads/' + chosen_ideals[0] + ".jpg") }}" style="max-width: 500px; max-height: 500px;">
+    {% endif %}
+</body>
+</html>

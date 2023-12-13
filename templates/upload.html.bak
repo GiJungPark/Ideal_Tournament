@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이상형 월드컵 - 업로드</title>
+</head>
+<body>
+    <h1>이상형 월드컵</h1>
+    
+    <form method="post" enctype="multipart/form-data">
+        <label for="name">이상형 이름:</label>
+        <input type="text" name="name" required>
+        <br>
+        
+        <label for="file">이미지 업로드:</label>
+        <input type="file" name="file" accept=".jpg, .jpeg, .png, .gif" required>
+        <br>
+        
+        <button type="submit">업로드</button>
+    </form>
+
+    {% if ideal_types %}
+        <h2>업로드된 이미지 목록:</h2>
+        <ul>
+            {% for ideal in ideal_types %}
+                <li>{{ ideal['name'] }}</li>
+            {% endfor %}
+        </ul>
+        
+        {% if 2 <= ideal_types|length <= 8 %}
+            <a href="{{ url_for('game') }}">게임 시작</a>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
+
